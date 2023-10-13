@@ -1,15 +1,19 @@
 <div class="container mt-5">
-    <h2>Data Products</h2>
+    <h1>Crud de Productos</h1>
+    <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-success mb-3" data-toggle="modal"
+            data-target="#agregarProductoModal">Agregar</button>
+    </div>
     <div class="row">
-        <div class="col-12" *ngFor="let item of data">
+        <div class="col-lg-4 col-md-6 col-sm-12" *ngFor="let item of data">
             <div class="card mb-3">
                 <div class="row no-gutters">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         <div class="card-body">
                             <h5 class="card-title">{{ item.name }}</h5>
                             <p class="card-text">Precio: ${{ item.price }}</p>
                             <p class="card-text">Fecha: {{ item.fecha }}</p>
-                            <p class="card-text">Antiguedad: {{ item.antiguedad }} años</p>
+                            <p class="card-text">Antigüedad: {{ item.antiguedad }} años</p>
                             <div class="row">
                                 <a (click)="eliminarProducto(item.id)" class="btn btn-danger m-2">Eliminar</a>
                                 <a (click)="actualizarProducto(item.id, item)" class="btn btn-primary m-2">Editar</a>
@@ -17,6 +21,33 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="agregarProductoModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Agregar Producto</h5>
+                <button type="button" class="close" (click)="cerrarModal()">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form #agregarProductoForm="ngForm" (ngSubmit)="agregarProducto(agregarProductoForm)">
+                    <div class="form-group">
+                        <label for="nombre">Nombre:</label>
+                        <input type="text" id="nombre" name="nombre" [(ngModel)]="nuevoProducto.nombre"
+                            class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="precio">Precio:</label>
+                        <input type="number" id="precio" name="precio" [(ngModel)]="nuevoProducto.precio"
+                            class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </form>
             </div>
         </div>
     </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../service/api.service';
 import { ToastrService } from 'ngx-toastr';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -10,11 +11,22 @@ import { ToastrService } from 'ngx-toastr';
 export class HomeComponent implements OnInit {
 
   data: any[] = [];
+  nuevoProducto: any = {};
+  modalRef: boolean = false;
 
   constructor(private apiService : ApiService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.llenarData();
+  }
+
+  abrirModal(){
+    this.modalRef = true;
+  }
+
+  cerrarModal(){
+    this.modalRef = false;
+    this.nuevoProducto = {};
   }
 
   llenarData(){
@@ -23,6 +35,21 @@ export class HomeComponent implements OnInit {
       this.data = data;
     })
   }
+
+  agregarProducto(formulario: NgForm) {
+    if (formulario.valid) {
+      this.apiService.createProduct(this.nuevoProducto).subscribe(
+        (response) => {
+          console.log('Producto agregado exitosamente:', response);
+          this.cerrarModal();
+        },
+        (error) => {
+          console.error('Error al agregar el producto', error);
+        }
+      );
+    }
+  }
+  
 
   eliminarProducto(id: number) {
     this.apiService.deleteProduct(id).subscribe(

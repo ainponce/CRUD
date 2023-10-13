@@ -6,17 +6,21 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ApiService {
-
+  
   private url = 'http://localhost:8080/api/v1/products';
-
+  
   constructor( private http: HttpClient) { }
-
+  
   public getProducts(): Observable<any> {
     return this.http.get<any>(this.url);
   }
-
+  
   public getProduct(id: number): Observable<any> {
     return this.http.get<any>(this.url + '/' + id);
+  }
+  
+  createProduct(product: any) {
+    return this.http.post<any>(this.url, product);
   }
 
   public deleteProduct(id: number): Observable<any> {
