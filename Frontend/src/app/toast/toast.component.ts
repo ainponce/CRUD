@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-toast',
@@ -6,14 +6,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./toast.component.css']
 })
 export class ToastComponent {
-   
-    showMyToast = false;
-  
-    showToast() {
-      this.showMyToast = true;
-    }
-  
-    hideToast() {
-      this.showMyToast = false;
-    }
+   @ViewChild('toast', { static: true }) toast!: ElementRef;
+
+   show() {
+    this.toast.nativeElement.style.display = 'block';
+  }
+
+  hide() {
+    this.toast.nativeElement.style.display = 'none';
+  }
 }

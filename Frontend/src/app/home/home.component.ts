@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ApiService } from '../service/api.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgForm } from '@angular/forms';
-import * as $ from 'jquery';
+import { ToastComponent } from '../toast/toast.component';
 
 @Component({
   selector: 'app-home',
@@ -10,6 +10,7 @@ import * as $ from 'jquery';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  @ViewChild(ToastComponent) toastComponent!: ToastComponent;
 
   data: any[] = [];
   nuevoProducto: any = {};
@@ -23,11 +24,13 @@ export class HomeComponent implements OnInit {
 
   abrirModal(){
     this.modalRef = true;
+    console.log('Modal abierto');
   }
 
   cerrarModal(){
     this.modalRef = false;
     this.nuevoProducto = {};
+    console.log('Modal cerrado');
   }
 
   llenarData(){
@@ -56,7 +59,7 @@ export class HomeComponent implements OnInit {
     this.apiService.deleteProduct(id).subscribe(
       (response) => {
         this.llenarData();
-        this.toastr.success('Producto eliminado con éxito', 'Éxito');
+        this.toastComponent.show();
       },
       (error) => {
         console.error('Error al eliminar el producto', error);
@@ -64,6 +67,7 @@ export class HomeComponent implements OnInit {
       }
     );
   }
+  
 
   actualizarProducto(id: number, product: any) {
     this.apiService.updateProduct(id, product).subscribe(
