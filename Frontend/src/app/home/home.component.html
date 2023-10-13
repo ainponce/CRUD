@@ -1,8 +1,8 @@
 <div class="container mt-5">
     <h1>Crud de Productos</h1>
     <div class="d-flex justify-content-end">
-        <button type="button" class="btn btn-success mb-3" data-toggle="modal"
-            data-target="#agregarProductoModal">Agregar</button>
+        <button type="button" class="btn btn-success mb-3" data-toggle="modal" data-target="#agregarProductoModal"
+            (click)="abrirModal()">Agregar</button>
     </div>
     <div class="row">
         <div class="col-lg-4 col-md-6 col-sm-12" *ngFor="let item of data">
